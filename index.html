@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ru">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Tier List Maker</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="css/style.css">
+    </head>
+    <body>
+        <header>
+            <div class="container">
+                <div class="header-content">
+                    <div class="logo">Tier List Maker</div>
+                    <div class="header-controls">
+                        <button id="save-json-btn" class="btn btn-success">
+                            <i class="fas fa-save"></i> Сохранить </button>
+                        <label class="btn btn-primary btn-file">
+                            <i class="fas fa-folder-open"></i> Загрузить <input type="file" id="load-json-input" accept=".json">
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <div class="container">
+            <div class="main-content">
+                <section class="tierlist-section">
+                    <div class="section-title">
+                        <i class="fas fa-edit"></i>
+                        <input type="text" class="tierlist-name" id="tierlist-name" value="Мой тирлист" placeholder="Название тирлиста">
+                    </div>
+                    <div class="controls">
+                        <button id="add-tier-btn" class="btn">
+                            <i class="fas fa-plus"></i> Добавить категорию </button>
+                        <label class="btn btn-info btn-file">
+                            <i class="fas fa-images"></i> Добавить изображения <input type="file" id="image-input" multiple accept="image/*">
+                        </label>
+                        <button id="clear-all" class="btn btn-error">
+                            <i class="fas fa-trash"></i> Очистить все </button>
+                    </div>
+                    <div id="tiers">
+                        <!-- Tier categories will be added here dynamically -->
+                    </div>
+                </section>
+                <aside class="images-section">
+                    <div class="section-title">
+                        <i class="fas fa-image"></i> Изображения
+                    </div>
+                    <div id="pool" class="tier-items">
+                        <div class="empty-pool">
+                            <i class="far fa-folder-open"></i>
+                            <p>Список картинок пуст!</p>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+        <script src="js/script.js"></script>
+    </body>
+</html>
