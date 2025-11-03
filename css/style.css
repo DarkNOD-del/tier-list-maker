@@ -59,7 +59,7 @@ header {
 
 .main-content {
     display: grid;
-    grid-template-columns: 1fr 350px;
+    grid-template-columns: 1fr 400px;
     gap: 24px;
     margin: 24px 0;
 }
@@ -259,8 +259,8 @@ header {
     border-radius: 8px;
     overflow: hidden;
     transition: transform 0.2s;
-    width: 80px;
-    height: 80px;
+    width: 100px;
+    height: 160px;
 }
 
 .item:hover {
