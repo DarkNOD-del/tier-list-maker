@@ -31,7 +31,7 @@ function initializeSortable() {
     animation: 150,
     ghostClass: 'sortable-ghost',
     chosenClass: 'sortable-chosen',
-    onEnd: updatePoolDisplay
+    onEnd: updateAllCounters
   });
 
   new Sortable(poolContainer, {
@@ -40,8 +40,54 @@ function initializeSortable() {
     ghostClass: 'sortable-ghost',
     chosenClass: 'sortable-chosen',
     filter: '.empty-pool',
-    onEnd: updatePoolDisplay
+    onEnd: updateAllCounters
   });
+}
+
+function updateAllCounters() {
+  updatePoolCounter();
+  updatePoolDisplay();
+  updateTierCounters();
+  updateTotalCounter();
+}
+
+function updatePoolCounter() {
+  const poolCounter = document.getElementById("pool-counter");
+  const poolItems = document.querySelectorAll("#pool .item").length;
+  poolCounter.textContent = `${poolItems} шт.`;
+}
+
+function updateTierCounters() {
+  document.querySelectorAll(".tier").forEach(tier => {
+    const counter = tier.querySelector(".tier-counter");
+    if (counter) {
+      const itemsCount = tier.querySelectorAll(".tier-items .item").length;
+      counter.textContent = `${itemsCount} шт.`;
+    }
+  });
+}
+
+function updateTotalCounter() {
+  let totalItems = 0;
+  
+  // Считаем элементы в категориях
+  document.querySelectorAll(".tier").forEach(tier => {
+    totalItems += tier.querySelectorAll(".tier-items .item").length;
+  });
+  
+  // Удаляем старый счетчик если есть
+  const oldCounter = document.querySelector(".total-counter");
+  if (oldCounter) {
+    oldCounter.remove();
+  }
+  
+  // Создаем новый счетчик
+  const totalCounter = document.createElement("div");
+  totalCounter.className = "total-counter";
+  totalCounter.textContent = `Всего элементов: ${totalItems} шт.`;
+  
+  // Добавляем счетчик после списка категорий
+  tiersContainer.before(totalCounter);
 }
 
 function addTier(name = "Новая категория", color = "#dddddd") {
@@ -76,16 +122,22 @@ function addTier(name = "Новая категория", color = "#dddddd") {
   nameInput.value = name;
   nameInput.placeholder = "Название категории";
 
+  const counter = document.createElement("span");
+  counter.className = "tier-counter";
+  counter.textContent = "0 шт.";
+
   const delBtn = document.createElement("button");
   delBtn.className = "tier-delete";
   delBtn.innerHTML = '<i class="fas fa-times"></i>';
   delBtn.onclick = () => {
     tierDiv.remove();
+    updateAllCounters();
   };
 
   header.appendChild(colorBtn);
   header.appendChild(colorInput);
   header.appendChild(nameInput);
+  header.appendChild(counter);
   header.appendChild(delBtn);
   tierDiv.appendChild(header);
 
@@ -100,10 +152,11 @@ function addTier(name = "Новая категория", color = "#dddddd") {
     animation: 150,
     ghostClass: 'sortable-ghost',
     chosenClass: 'sortable-chosen',
-    onEnd: updatePoolDisplay
+    onEnd: updateAllCounters
   });
 
   tierCount++;
+  updateAllCounters();
   return tierDiv;
 }
 
@@ -112,6 +165,7 @@ document.addEventListener('DOMContentLoaded', () => {
     addTier(tier.name, tier.color);
   });
   initializeSortable();
+  updateAllCounters();
 });
 
 document.getElementById("add-tier-btn").onclick = () => {
@@ -138,6 +192,7 @@ function addRemoveHandler(itemDiv) {
     e.stopPropagation();
     itemDiv.remove();
     updatePoolDisplay();
+    updateAllCounters();
   };
   itemDiv.appendChild(btn);
 }
@@ -155,6 +210,7 @@ document.getElementById("image-input").onchange = function(event) {
       addRemoveHandler(itemDiv);
       document.getElementById("pool").appendChild(itemDiv);
       updatePoolDisplay();
+      updateAllCounters();
     };
     reader.readAsDataURL(file);
   }
@@ -248,6 +304,7 @@ document.getElementById("load-json-input").onchange = function(event) {
     });
 
     updatePoolDisplay();
+    updateAllCounters();
   };
   reader.readAsText(file);
   event.target.value = "";
@@ -262,7 +319,10 @@ document.getElementById("clear-all").onclick = function() {
     initialTiers.forEach(tier => {
       addTier(tier.name, tier.color);
     });
+    
+    updateAllCounters();
   }
 };
 
 updatePoolDisplay();
+updateAllCounters();

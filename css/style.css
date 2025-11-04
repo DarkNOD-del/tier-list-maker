@@ -212,6 +212,14 @@ header {
     background: rgba(0, 0, 0, 0.05);
 }
 
+.tier-counter {
+    font-size: 14px;
+    color: #8e8e93;
+    font-weight: 500;
+    min-width: 40px;
+    text-align: center;
+}
+
 .tier-delete {
     background: none;
     border: none;
@@ -314,6 +322,26 @@ header {
 
 .empty-pool p {
     font-size: 16px;
+}
+
+.counter {
+    background: var(--primary-color);
+    color: white;
+    border-radius: 12px;
+    padding: 2px 8px;
+    font-size: 14px;
+    font-weight: 500;
+    margin-left: auto;
+}
+
+.total-counter {
+    margin-bottom: 16px;
+    padding: 12px;
+    background: rgba(0, 122, 255, 0.05);
+    border-radius: 8px;
+    text-align: center;
+    font-weight: 500;
+    color: var(--primary-color);
 }
 
 @media (max-width: 1024px) {
