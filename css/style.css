@@ -272,7 +272,7 @@ header {
 }
 
 .item:hover {
-    transform: scale(1.03);
+    transform: scale(1.01) rotateZ(1deg);
 }
 
 .item img {
@@ -348,4 +348,5 @@ header {
     .main-content {
         grid-template-columns: 1fr;
     }
+
 }
